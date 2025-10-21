@@ -1,0 +1,9 @@
+<div>
+  @if (isLoading) {
+    <p class="text">loading ...</p>
+  } @else if (quote) {
+    <p class="text">{{ quote }}</p>
+  } @else if (isError) {
+    <p style="color: red">Something went wrong.</p>
+  }
+</div>

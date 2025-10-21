@@ -1,0 +1,49 @@
+<div class="wrapper">
+  <div #containerElement>
+    <h2 class="heading resize-text" #titleElement style="font-size: 100%">
+      @if (title) {
+        <span>Time to {{ title }}</span>
+      }
+    </h2>
+
+    <br />
+
+    <p class="resize-text" #countdownElement style="font-size: 100%">
+      @if (selectedDate && !invalidDate) {
+        <span>
+          {{ difference?.days }} days, {{ difference?.hours }} hours,
+          {{ difference?.minutes }}m, {{ difference?.seconds }}s
+        </span>
+      }
+    </p>
+  </div>
+
+  <app-quote></app-quote>
+
+  <div class="input-wrapper">
+    <label class="label" for="title">Title</label>
+    <input
+      class="input"
+      id="title"
+      type="text"
+      [(ngModel)]="title"
+      (ngModelChange)="onTitleChange($event)"
+    />
+  </div>
+
+  <div class="input-wrapper">
+    <label class="label" for="selectedDate">Date</label>
+
+    <input
+      class="input"
+      id="selectedDate"
+      type="date"
+      [(ngModel)]="selectedDate"
+      (ngModelChange)="onDateChange($event)"
+    />
+
+    @if (invalidDate) {
+      <p style="color: red">The selected date must be in the future.</p>
+    }
+  </div>
+</div>

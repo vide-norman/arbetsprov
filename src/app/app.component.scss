@@ -1,0 +1,50 @@
+@import '../variables.scss';
+
+:host {
+  .wrapper {
+    padding: 16px;
+    background: $brand-grey;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+
+  .container {
+    overflow: hidden;
+  }
+
+  .heading {
+    color: $brand-purple;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+
+  .resize-text {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .input-wrapper {
+    position: relative;
+    padding: 16px;
+  }
+
+  .label {
+    position: absolute;
+    padding: 4px;
+    top: 4px;
+    left: 24px;
+    font-size: 14px;
+    background: $brand-grey;
+  }
+
+  .input {
+    height: 54px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid $border-grey;
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 0 16px;
+  }
+}
