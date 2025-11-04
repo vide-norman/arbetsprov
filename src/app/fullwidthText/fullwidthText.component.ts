@@ -20,6 +20,8 @@ export class FullwidthText {
 
     if (!container || !text) return
 
+    text.style.fontSize = '100%'
+
     this.containerObserver = new ResizeObserver(() =>
       setMaxFontSize(text, container),
     )
