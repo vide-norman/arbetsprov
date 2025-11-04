@@ -7,9 +7,12 @@
 
   <br />
 
-  @if (selectedDate && !invalidDate) {
+  @if (selectedDate && !invalidDate && difference) {
   <div fullwidthText>
-    <span>{{ countdownString() }}</span>
+    <span>
+      {{ difference.days }} days, {{ difference.hours }} hours,
+      {{ difference.minutes }}m, {{ difference.seconds }}s
+    </span>
   </div>
   }
 

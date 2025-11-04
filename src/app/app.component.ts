@@ -4,13 +4,6 @@ import { AppQuote } from './quote/quote.component'
 import { getTimeDifference, isFutureDate } from '../utils/dates'
 import { FullwidthTextDirective } from './fullwidthText.directive'
 
-interface Difference {
-  days: number
-  hours: number
-  minutes: number
-  seconds: number
-}
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -22,15 +15,12 @@ export class AppComponent {
   title?: string
   selectedDate?: string
   invalidDate = false
-  difference = signal<Difference | undefined>(undefined)
-
-  countdownString = computed(() => {
-    const difference = this.difference()
-    return (
-      difference &&
-      `${difference.days} days, ${difference.hours} hours, ${difference.minutes}m, ${difference.seconds}s`
-    )
-  })
+  difference?: {
+    days: number
+    hours: number
+    minutes: number
+    seconds: number
+  }
 
   private timer?: ReturnType<typeof setInterval>
 
@@ -63,7 +53,7 @@ export class AppComponent {
 
     if (!isFutureDate(selectedDate)) {
       clearInterval(this.timer)
-      this.difference.set({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+      this.difference = { days: 0, hours: 0, minutes: 0, seconds: 0 }
       return
     }
 
@@ -79,12 +69,12 @@ export class AppComponent {
     const minutes = Math.floor((differenceInMS % hour) / minute)
     const seconds = Math.floor((differenceInMS % minute) / second)
 
-    this.difference.set({
+    this.difference = {
       days,
       hours,
       minutes,
       seconds,
-    })
+    }
   }
 
   onTitleChange(value: string) {
