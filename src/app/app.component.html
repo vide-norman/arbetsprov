@@ -1,14 +1,16 @@
 <div class="wrapper">
   @if (title) {
-  <fullwidth-text>
+  <div fullwidthText>
     <h2 class="heading">{{ title }}</h2>
-  </fullwidth-text>
+  </div>
   }
 
   <br />
 
   @if (selectedDate && !invalidDate) {
-  <fullwidth-text>{{ countdownString() }}</fullwidth-text>
+  <div fullwidthText>
+    <span>{{ countdownString() }}</span>
+  </div>
   }
 
   <app-quote />

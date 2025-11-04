@@ -2,7 +2,7 @@ import { Component, computed, signal } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { AppQuote } from './quote/quote.component'
 import { getTimeDifference, isFutureDate } from '../utils/dates'
-import { FullwidthText } from './fullwidthText/fullwidthText.component'
+import { FullwidthTextDirective } from './fullwidthText.directive'
 
 interface Difference {
   days: number
@@ -14,7 +14,7 @@ interface Difference {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule, AppQuote, FullwidthText],
+  imports: [FormsModule, AppQuote, FullwidthTextDirective],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
