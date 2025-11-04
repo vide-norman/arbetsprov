@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core'
+import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { AppQuote } from './quote/quote.component'
 import { getTimeDifference, isFutureDate } from '../utils/dates'
