@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { AppQuote } from './quote/quote.component'
 import { getTimeDifference, isFutureDate } from '../utils/dates'
-import { FullwidthTextDirective } from './fullwidthText.directive'
+import { FullwidthTextDirective } from '../directives/fullwidthText.directive'
 
 @Component({
   selector: 'app-root',
