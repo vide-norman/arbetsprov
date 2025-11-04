@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'Open Sauce One';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/open-sauce-one@latest/latin-400-normal.woff2)
+      format('woff2'),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/open-sauce-one@latest/latin-400-normal.woff)
+      format('woff');
+}
+
+@font-face {
+  font-family: 'Open Sauce One';
+  font-style: bold;
+  font-display: swap;
+  font-weight: 800;
+  src:
+    url(https://cdn.jsdelivr.net/fontsource/fonts/open-sauce-one@latest/latin-800-normal.woff2)
+      format('woff2'),
+    url(https://cdn.jsdelivr.net/fontsource/fonts/open-sauce-one@latest/latin-800-normal.woff)
+      format('woff');
+}
+
+body {
+  font-size: 16px;
+  font-family: 'Open Sauce One', sans-serif;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 16px 0;
+}
