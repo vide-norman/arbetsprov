@@ -8,19 +8,11 @@
     box-sizing: border-box;
   }
 
-  .container {
-    overflow: hidden;
-  }
-
   .heading {
     color: $brand-purple;
     font-weight: bold;
     line-height: 1.2;
-  }
-
-  .resize-text {
-    display: inline-block;
-    white-space: nowrap;
+    margin: 0;
   }
 
   .input-wrapper {

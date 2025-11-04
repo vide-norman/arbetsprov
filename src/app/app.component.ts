@@ -1,13 +1,20 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'
+import { Component, computed, signal } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { AppQuote } from './quote/quote.component'
-import { resizeText } from '../utils/resizeText'
-import { getTimeDifference } from '../utils/getTimeDifference'
+import { getTimeDifference, isFutureDate } from '../utils/dates'
+import { FullwidthText } from './fullwidthText/fullwidthText.component'
+
+interface Difference {
+  days: number
+  hours: number
+  minutes: number
+  seconds: number
+}
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule, AppQuote],
+  imports: [FormsModule, AppQuote, FullwidthText],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
@@ -15,19 +22,17 @@ export class AppComponent {
   title?: string
   selectedDate?: string
   invalidDate = false
-  difference?: {
-    days: number
-    minutes: number
-    hours: number
-    seconds: number
-  }
+  difference = signal<Difference | undefined>(undefined)
 
-  @ViewChild('titleElement') titleElement?: ElementRef<HTMLElement>
-  @ViewChild('containerElement') containerElement?: ElementRef<HTMLElement>
-  @ViewChild('countdownElement') countdownElement?: ElementRef<HTMLElement>
+  countdownString = computed(() => {
+    const difference = this.difference()
+    return (
+      difference &&
+      `${difference.days} days, ${difference.hours} hours, ${difference.minutes}m, ${difference.seconds}s`
+    )
+  })
 
   private timer?: ReturnType<typeof setInterval>
-  private observers: ResizeObserver[] = []
 
   ngOnInit() {
     const storedTitle = localStorage.getItem('title')
@@ -35,38 +40,10 @@ export class AppComponent {
 
     if (storedTitle) this.title = storedTitle
 
-    if (storedDate) {
+    if (storedDate && isFutureDate(new Date(storedDate))) {
       this.selectedDate = storedDate
-
-      if (getTimeDifference(new Date(storedDate)) > 0) {
-        this.startCountdown()
-      }
+      this.startCountdown()
     }
-  }
-
-  ngAfterViewInit() {
-    const container = this.containerElement?.nativeElement
-    const title = this.titleElement?.nativeElement
-    const countdown = this.countdownElement?.nativeElement
-
-    if (!container || !title || !countdown) return
-
-    const titleObserver = new ResizeObserver(() => resizeText(title, container))
-
-    const countdownObserver = new ResizeObserver(() =>
-      resizeText(countdown, container),
-    )
-
-    const containerObserver = new ResizeObserver(() => {
-      resizeText(title, container)
-      resizeText(countdown, container)
-    })
-
-    titleObserver.observe(title)
-    countdownObserver.observe(countdown)
-    containerObserver.observe(container)
-
-    this.observers.push(titleObserver, countdownObserver, containerObserver)
   }
 
   private startCountdown() {
@@ -83,13 +60,14 @@ export class AppComponent {
     if (!this.selectedDate) return
 
     const selectedDate = new Date(this.selectedDate)
-    const differenceInMS = getTimeDifference(selectedDate)
 
-    if (differenceInMS <= 0) {
+    if (!isFutureDate(selectedDate)) {
       clearInterval(this.timer)
-      this.difference = { days: 0, hours: 0, minutes: 0, seconds: 0 }
+      this.difference.set({ days: 0, hours: 0, minutes: 0, seconds: 0 })
       return
     }
+
+    const differenceInMS = getTimeDifference(selectedDate)
 
     const second = 1000
     const minute = second * 60
@@ -101,32 +79,31 @@ export class AppComponent {
     const minutes = Math.floor((differenceInMS % hour) / minute)
     const seconds = Math.floor((differenceInMS % minute) / second)
 
-    this.difference = {
+    this.difference.set({
       days,
       hours,
       minutes,
       seconds,
-    }
+    })
   }
 
   onTitleChange(value: string) {
     localStorage.setItem('title', value)
   }
 
-  onDateChange(newDate: string) {
+  onDateChange(date: string) {
     this.invalidDate = false
 
-    if (getTimeDifference(new Date(newDate)) < 0) {
+    if (!isFutureDate(new Date(date))) {
       this.invalidDate = true
       return
     }
 
-    localStorage.setItem('date', newDate)
+    localStorage.setItem('date', date)
     this.startCountdown()
   }
 
   ngOnDestroy() {
     if (this.timer) clearInterval(this.timer)
-    this.observers.forEach((item) => item.disconnect())
   }
 }

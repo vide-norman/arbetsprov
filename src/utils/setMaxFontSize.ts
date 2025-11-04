@@ -1,8 +1,8 @@
-import { getMaxFontSize } from './getMaxFontSize'
-
-export const resizeText = (text: HTMLElement, wrapper: HTMLElement) => {
+export const setMaxFontSize = (text: HTMLElement, wrapper: HTMLElement) => {
   let currentSizePercent = Number(text.style.fontSize.replace('%', ''))
-  const maxFontSize = getMaxFontSize(wrapper, text)
+
+  const elementSizePercent = wrapper.offsetWidth / text.offsetWidth
+  const maxFontSize = Math.floor(currentSizePercent * elementSizePercent)
 
   if (maxFontSize === currentSizePercent) return
 

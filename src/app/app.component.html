@@ -1,24 +1,21 @@
 <div class="wrapper">
-  <div #containerElement>
-    <h2 class="heading resize-text" #titleElement style="font-size: 100%">
-      @if (title) {
-        <span>Time to {{ title }}</span>
-      }
-    </h2>
+  @if (title) {
+  <h2 class="heading">
+    <fullwidth-text>
+      {{ title }}
+    </fullwidth-text>
+  </h2>
+  }
 
-    <br />
+  <br />
 
-    <p class="resize-text" #countdownElement style="font-size: 100%">
-      @if (selectedDate && !invalidDate) {
-        <span>
-          {{ difference?.days }} days, {{ difference?.hours }} hours,
-          {{ difference?.minutes }}m, {{ difference?.seconds }}s
-        </span>
-      }
-    </p>
-  </div>
+  @if (selectedDate && !invalidDate) {
+  <fullwidth-text>
+    {{ countdownString() }}
+  </fullwidth-text>
+  }
 
-  <app-quote></app-quote>
+  <app-quote />
 
   <div class="input-wrapper">
     <label class="label" for="title">Title</label>
@@ -33,7 +30,6 @@
 
   <div class="input-wrapper">
     <label class="label" for="selectedDate">Date</label>
-
     <input
       class="input"
       id="selectedDate"
@@ -43,7 +39,7 @@
     />
 
     @if (invalidDate) {
-      <p style="color: red">The selected date must be in the future.</p>
+    <p style="color: red">The selected date must be in the future.</p>
     }
   </div>
 </div>
